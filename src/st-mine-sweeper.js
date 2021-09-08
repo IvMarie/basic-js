@@ -23,7 +23,29 @@ import { NotImplementedError } from '../extensions/index.js';
  *  [1, 1, 1]
  * ]
  */
-export default function minesweeper (/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function minesweeper (m) {
+  const result = m;
+
+  for (let x = 0; x < m.length; x++) {
+    for (let y = 0; y < m[0].length; y++) {
+      let count = 0;
+
+      if (m[x][y] === false) {
+        if (m[x][y - 1] !== undefined && m[x][y - 1] === true) { count += 1; }
+        if (m[x][y + 1] !== undefined  && m[x][y + 1] === true) { count += 1; }
+        if (m[x - 1] !== undefined) {
+          if (m[x - 1][y - 1] !== undefined && m[x - 1][y - 1] === true) { count += 1; }
+          if (m[x - 1][y] !== undefined  && m[x - 1][y] === true) { count += 1; }
+          if (m[x - 1][y + 1] !== undefined && m[x - 1][y + 1] === true) { count += 1; }
+        }
+        if (m[x + 1] !== undefined) {
+          if (m[x + 1][y - 1] !== undefined && m[x + 1][y - 1] === true) { count += 1; }
+          if (m[x + 1][y] !== undefined && m[x + 1][y] === true) { count += 1; }
+          if (m[x + 1][y + 1] !== undefined && m[x + 1][y + 1] === true) { count += 1; }
+        }
+        result[x][y] = count;
+      }
+    }
+  }
+  return result.map(x => x.map(y => y === true ? 1 : y));
 }
